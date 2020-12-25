@@ -1,0 +1,12 @@
+{
+    "require": {
+        "guzzlehttp/guzzle": "^7.2",
+        "corneltek/cliframework": "^4.0"
+    },
+    "bin": ["bin/tap"],
+    "autoload": {
+        "psr-4": {"Kily\\API\\TrueAPI\\Cli\\": "src/"}
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
