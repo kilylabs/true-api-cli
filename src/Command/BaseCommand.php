@@ -2,9 +2,11 @@
 
 namespace Kily\API\TrueAPI\Cli\Command;
 
-use Kily\Api\TrueAPI\Cli\Exception\AuthException;
+use Kily\API\TrueAPI\Cli\Exception\AuthException;
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Exception\RequestException;
 use CLIFramework\Command;
+use CLIFramework\Component\Table\Table;
 use CPStore;
 use CPSigner;
 use CPSignedData;
@@ -50,7 +52,43 @@ class BaseCommand extends Command
             $this->auth();
         }
         $options = array_merge($this->getSignedRequestOptions(),$options);
-        return $client->request($method,$uri,$options);
+        try {
+            return $client->request($method,$uri,$options);
+        } catch(RequestException $e) {
+            if ($e->hasResponse()) {
+                return $e->getResponse();
+            }
+            throw $e;
+        }
+    }
+
+    public function printTable($list,$columns=null) {
+        if(!$list) return '';
+        $headers = [];
+        if($columns) {
+            $columns = explode(',',$columns);
+        }
+        $table = new Table;
+        foreach($list as $item) {
+            if(!$headers) {
+                $headers = array_keys($item);
+                if($columns) {
+                    $headers = array_filter($headers, function($el) use ($columns) {
+                        return in_array($el, $columns);
+                    });
+                    $headers = array_values($headers);
+                }
+                $table->setHeaders($headers);
+            }
+            if($columns) {
+                $item = array_filter($item, function($el) use ($columns) {
+                    return in_array($el, $columns);
+                },ARRAY_FILTER_USE_KEY);
+                $item = array_values($item);
+            }
+            $table->addRow($item);
+        }
+        echo $table->render();
     }
 
     protected function auth() {
@@ -63,30 +101,35 @@ class BaseCommand extends Command
         $store = new CPStore();
         $store->Open(CURRENT_USER_STORE,"my",STORE_OPEN_READ_ONLY);
         $certs = $store->get_Certificates();
-        $cert = null;
-        if(!$opts->certid) {
-            foreach(range(1,$certs->Count()) as $certid) {
-                $cert = $certs->Item($certid);
-                if($cert->IsValid()) {
-                    break;
+        $last_e = $cert = $sm = null;
+        $signer = new CPSigner();
+        $certids = range(1,$certs->Count());
+        if($opts->certid) {
+            $certids = [$opts->certid];
+        }
+        foreach($certids as $certid) {
+            $cert = $certs->Item($certid);
+            if($cert->IsValid()) {
+                $signer->set_Certificate($cert);
+
+                $sd = new CPSignedData();
+                $sd->set_Content($content);
+
+                try {
+                    $sm = $sd->SignCades($signer, CADES_BES , false, ENCODE_BASE64);
+                } catch(\Exception $e) {
+                    $last_e = $e;
+                    continue;
                 }
-                $cert = null;
             }
-        } else {
-            $cert = $certs->Item($opts->certid);
         }
 
         if(!$cert) {
-            throw new AuthException("No valid certificate found");
+            throw new AuthException("None of certificates found");
+        } elseif(!$sm) {
+            throw new AuthException('Error trying sign auth data. Make sure your certificate is accesible. '.$last_e->__toString(),0,$last_e);
         }
 
-        $signer = new CPSigner();
-        $signer->set_Certificate($cert);
-
-        $sd = new CPSignedData();
-        $sd->set_Content($content);
-
-        $sm = $sd->SignCades($signer, CADES_BES , false, ENCODE_BASE64);
         $sm = preg_replace("/[\r\n]/","",$sm);
 
         $res = $client->request('POST', 'auth/simpleSignIn', [

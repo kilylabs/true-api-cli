@@ -4,72 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fe27f032d3844ad453efc75bfdc0f8b",
+    "content-hash": "e43830bef4adb157ec530398a9240ff6",
     "packages": [
-        {
-            "name": "corneltek/cliframework",
-            "version": "4.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/c9s/CLIFramework.git",
-                "reference": "5d7c4703390e80326938cbdef7de499bca2a0143"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/5d7c4703390e80326938cbdef7de499bca2a0143",
-                "reference": "5d7c4703390e80326938cbdef7de499bca2a0143",
-                "shasum": ""
-            },
-            "require": {
-                "corneltek/codegen": "4.0.x-dev",
-                "corneltek/getoptionkit": "~2.5.4",
-                "php": ">=5.3.0",
-                "pimple/pimple": "*",
-                "symfony/class-loader": "~2.8|~3.0|~3.2",
-                "symfony/finder": "~2.8|~3.0|~3.2",
-                "universal/universal": "2.0.x-dev"
-            },
-            "require-dev": {
-                "corneltek/phpunit-testmore": "dev-master",
-                "satooshi/php-coveralls": "^1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "CLIFramework\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Yo-An Lin",
-                    "email": "yoanlin93@gmail.com"
-                }
-            ],
-            "description": "Command-line framework for PHP",
-            "homepage": "http://github.com/c9s/CLIFramework",
-            "keywords": [
-                "command",
-                "command-line",
-                "completion",
-                "framework",
-                "getopt",
-                "zsh"
-            ],
-            "support": {
-                "issues": "https://github.com/c9s/CLIFramework/issues",
-                "source": "https://github.com/c9s/CLIFramework/tree/4.0.0"
-            },
-            "time": "2017-08-28T11:46:34+00:00"
-        },
         {
             "name": "corneltek/codegen",
             "version": "dev-master",
@@ -494,6 +430,69 @@
                 "source": "https://github.com/guzzle/psr7/tree/1.7.0"
             },
             "time": "2020-09-30T07:37:11+00:00"
+        },
+        {
+            "name": "kilylabs/cliframework",
+            "version": "4.0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kilylabs/CLIFramework.git",
+                "reference": "a3431aa0d9ff70f43df5db6f90e48849637374f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kilylabs/CLIFramework/zipball/a3431aa0d9ff70f43df5db6f90e48849637374f3",
+                "reference": "a3431aa0d9ff70f43df5db6f90e48849637374f3",
+                "shasum": ""
+            },
+            "require": {
+                "corneltek/codegen": "4.0.x-dev",
+                "corneltek/getoptionkit": "~2.5.4",
+                "php": ">=5.3.0",
+                "pimple/pimple": "*",
+                "symfony/class-loader": "~2.8|~3.0|~3.2",
+                "symfony/finder": "~2.8|~3.0|~3.2",
+                "universal/universal": "2.0.x-dev"
+            },
+            "require-dev": {
+                "corneltek/phpunit-testmore": "dev-master",
+                "satooshi/php-coveralls": "^1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CLIFramework\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "Command-line framework for PHP",
+            "homepage": "http://github.com/kilylabs/CLIFramework",
+            "keywords": [
+                "command",
+                "command-line",
+                "completion",
+                "framework",
+                "getopt",
+                "zsh"
+            ],
+            "support": {
+                "source": "https://github.com/kilylabs/CLIFramework/tree/4.0.0.2"
+            },
+            "time": "2020-12-26T09:54:09+00:00"
         },
         {
             "name": "pimple/pimple",

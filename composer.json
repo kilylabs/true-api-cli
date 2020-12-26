@@ -1,7 +1,7 @@
 {
     "require": {
         "guzzlehttp/guzzle": "^7.2",
-        "corneltek/cliframework": "^4.0"
+        "kilylabs/cliframework": "^4.0.0.2"
     },
     "bin": ["bin/tap"],
     "autoload": {

@@ -20,33 +20,10 @@ class MarkirovkaCommand extends BaseCommand
 
 	public function init()
 	{
-        $this->commandGroup('Markirovka subcommands', [
-            'docs'=> '\Kily\API\TrueAPI\Cli\Command\Markirovka\DocsCommand',
-        ]);
+        parent::init();
+        $this->command('docs','\Kily\API\TrueAPI\Cli\Command\Markirovka\DocsCommand');
+        $this->command('products','\Kily\API\TrueAPI\Cli\Command\Markirovka\ProductsCommand');
+        $this->command('cises','\Kily\API\TrueAPI\Cli\Command\Markirovka\CisesCommand');
 	}
-
-    /*
-	public function options($opts)
-	{
-		// command options
-
-	}
-
-    public function arguments($args)
-    {
-        $args->add('subcommand')
-            ->desc('Subcommand')
-            ->validValues(['docs']);
-    }
-
-	public function execute($subcommand)
-	{
-		//$logger->info('execute');
-		//$logger->error('error');
-		//$input = $this->ask('Please type something');
-
-        echo $subcommand,"\n";
-	}
-     */
 
 }

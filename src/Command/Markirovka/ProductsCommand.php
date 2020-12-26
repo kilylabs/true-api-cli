@@ -5,9 +5,8 @@ namespace Kily\API\TrueAPI\Cli\Command\Markirovka;
 use Kily\API\TrueAPI\Cli\Command\BaseCommand;
 use CLIFramework\Command\HelpCommand;
 
-class DocsCommand extends BaseCommand
+class ProductsCommand extends BaseCommand
 {
-
 
 	public function brief()
 	{
@@ -16,8 +15,8 @@ class DocsCommand extends BaseCommand
 
 	public function init()
 	{
-        $this->command('list','\Kily\API\TrueAPI\Cli\Command\Markirovka\Docs\ListCommand');
-        $this->command('view','\Kily\API\TrueAPI\Cli\Command\Markirovka\Docs\ViewCommand');
+        $this->command('list','\Kily\API\TrueAPI\Cli\Command\Markirovka\Products\ListCommand');
+        $this->command('view','\Kily\API\TrueAPI\Cli\Command\Markirovka\Products\ViewCommand');
 	}
 
 	public function options($opts)
