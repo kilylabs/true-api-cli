@@ -1,6 +1,6 @@
 {
     "name": "kilylabs/true-api-cli",
-    "type": "project",
+    "type": "library",
     "description": "Консольная утилита для работы с API честный знак",
     "keywords": ["честный знак", "гис мт", "true api", "api", "php"],
     "homepage": "https://github/soft/kily-delivery",
