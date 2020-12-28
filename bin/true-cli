@@ -1,10 +1,15 @@
 #!/usr/bin/php
 <?php
 
-if(file_exists(__DIR__.'/../vendor/autoload.php')) {
-    require __DIR__.'/../vendor/autoload.php';
-} else {
-    die("HERE");
+$paths = [
+    __DIR__.'/../vendor/autoload.php', // locally
+    __DIR__.'/../../../autoload.php' // dependency
+];
+foreach ($paths as $path) {
+    if (file_exists($path)) {
+        require_once $path;
+        break;
+    }
 }
 
 (new Kily\API\TrueAPI\Cli\Command)->runWithTry($argv);
