@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "^6.5.5",
+        "guzzlehttp/guzzle": "^6.5 || ^7.0",
         "kilylabs/cliframework": "^4.0.0.2"
     },
     "bin": ["bin/true-cli"],
