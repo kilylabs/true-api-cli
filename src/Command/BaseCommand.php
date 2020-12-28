@@ -112,6 +112,10 @@ class BaseCommand extends Command
             if($cert->IsValid()) {
                 $signer->set_Certificate($cert);
 
+                if($opts->pin) {
+                    $signer->set_KeyPin($opts->pin);
+                }
+
                 $sd = new CPSignedData();
                 $sd->set_Content($content);
 

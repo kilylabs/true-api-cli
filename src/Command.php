@@ -15,6 +15,7 @@ class Command extends Application {
     {
         $opts->add('v|verbose', 'verbose message');
         $opts->add('i|certid:', 'certificate id');
+        $opts->add('p|pin:', 'key pin');
     }
 
     public function init()
