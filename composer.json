@@ -1,9 +1,21 @@
 {
+    "name": "kilylabs/true-api-cli",
+    "type": "project",
+    "description": "Консольная утилита для работы с API честный знак",
+    "keywords": ["честный знак", "гис мт", "true api", "api", "php"],
+    "homepage": "https://github/soft/kily-delivery",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Bogdanov",
+            "email": "ab@dev.kily.ru"
+        }
+    ],
     "require": {
         "guzzlehttp/guzzle": "^7.2",
         "kilylabs/cliframework": "^4.0.0.2"
     },
-    "bin": ["bin/tap"],
+    "bin": ["bin/true-cli"],
     "autoload": {
         "psr-4": {"Kily\\API\\TrueAPI\\Cli\\": "src/"}
     },
