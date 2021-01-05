@@ -24,4 +24,10 @@ class Command extends Application {
         $this->command( 'markirovka', '\Kily\API\TrueAPI\Cli\Command\MarkirovkaCommand');
     }
 
+    public function runWithReturn($argv) {
+        ob_start();
+        parent::run($argv);
+        $ret = ob_get_clean();
+        return $ret;
+    }
 }

@@ -35,7 +35,7 @@ composer require kilylabs/true-api-cli
 
 Чтобы не быть привязанным к флешке, скопируйте папку с сертификатом УКЭП в папку:
 ```
-cp /media/flash/cert.000 /var/opt/cprocsp/keys/имя_пользователя/
+cp -r /media/flash/cert.000 /var/opt/cprocsp/keys/имя_пользователя/
 ```
 
 А после, установите сертификат командой:
