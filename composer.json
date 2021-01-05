@@ -13,7 +13,10 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "^6.5 || ^7.0",
-        "kilylabs/cliframework": "^4.0.0.2"
+        "kilylabs/cliframework": "^4.0.0.2",
+        "malkusch/lock": "^2.1",
+        "dnoegel/php-xdg-base-dir": "^0.1.1",
+        "hassankhan/config": "^2.2"
     },
     "bin": ["bin/true-cli"],
     "autoload": {
