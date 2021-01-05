@@ -3,6 +3,7 @@
 namespace Kily\API\TrueAPI\Cli\Command;
 
 use Kily\API\TrueAPI\Cli\Exception\AuthException;
+use Kily\API\TrueAPI\Cli\Config;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\RequestException;
 use CLIFramework\Command;
@@ -49,7 +50,7 @@ class BaseCommand extends Command
     public function signedRequest($method,$uri,$options = []) {
         $client = $this->getHttpClient();
         if(!$this->getAuthToken()) {
-            $this->auth();
+            $this->auth($method,$uri,$options);
         }
         $options = array_merge($this->getSignedRequestOptions(),$options);
         try {
@@ -91,13 +92,26 @@ class BaseCommand extends Command
         echo $table->render();
     }
 
-    protected function auth() {
-        $opts = $this->getApplication()->getOptions();
+    protected function auth($method,$uri,$options) {
         $client = $this->getHttpClient();
         $res = $client->request('GET', 'auth/key');
         $out = json_decode($res->getBody()->__toString());
         $content = $out->data;
 
+        $sm = $this->signData($content);
+
+        $res = $client->request('POST', 'auth/simpleSignIn', [
+            'json'=>[
+                'uuid'=>$out->uuid,
+                'data'=>$sm,
+            ],
+        ]);
+        $json = json_decode($res->getBody()->__toString());
+        $this->setAuthToken($json->token);
+    }
+
+    protected function signData($content) {
+        $opts = $this->getApplication()->getOptions();
         $store = new CPStore();
         $store->Open(CURRENT_USER_STORE,"my",STORE_OPEN_READ_ONLY);
         $certs = $store->get_Certificates();
@@ -134,23 +148,18 @@ class BaseCommand extends Command
             throw new AuthException('Error trying sign auth data. Make sure your certificate is accesible. '.$last_e->__toString(),0,$last_e);
         }
 
-        $sm = preg_replace("/[\r\n]/","",$sm);
-
-        $res = $client->request('POST', 'auth/simpleSignIn', [
-            'json'=>[
-                'uuid'=>$out->uuid,
-                'data'=>$sm,
-            ],
-        ]);
-        $json = json_decode($res->getBody()->__toString());
-        $this->setAuthToken($json->token);
+        return preg_replace("/[\r\n]/","",$sm);
     }
 
     protected function setAuthToken($token) {
         $this->_auth_token = $token;
+        Config::set("markirovka_auth_token",$token);
     }
 
     protected function getAuthToken() {
+        if(!$this->_auth_token) {
+            $this->_auth_token = Config::get("markirovka_auth_token");
+        }
         return $this->_auth_token;
     }
 
