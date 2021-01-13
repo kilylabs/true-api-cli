@@ -48,19 +48,30 @@ class BaseCommand extends Command
     }
 
     public function signedRequest($method,$uri,$options = []) {
-        $client = $this->getHttpClient();
         if(!$this->getAuthToken()) {
             $this->auth($method,$uri,$options);
         }
-        $options = array_merge($this->getSignedRequestOptions(),$options);
         try {
-            return $client->request($method,$uri,$options);
+            return $this->signedRequestInternal($method,$uri,$options);
         } catch(RequestException $e) {
             if ($e->hasResponse()) {
-                return $e->getResponse();
+                $resp = $e->getResponse();
+                if($resp->getStatusCode() == 401) {
+                    if($this->auth($method,$uri,$options)) {
+                        return $this->signedRequestInternal($method,$uri,$options);
+                    }
+                } else {
+                    return $resp;
+                }
             }
             throw $e;
         }
+    }
+
+    protected function signedRequestInternal($method,$uri,$options) {
+        $client = $this->getHttpClient();
+        $options = array_merge($this->getSignedRequestOptions(),$options);
+        return $client->request($method,$uri,$options);
     }
 
     public function printTable($list,$columns=null) {
@@ -108,6 +119,8 @@ class BaseCommand extends Command
         ]);
         $json = json_decode($res->getBody()->__toString());
         $this->setAuthToken($json->token);
+
+        return true;
     }
 
     protected function signData($content) {
