@@ -6,6 +6,7 @@ use Kily\API\TrueAPI\Cli\Exception\AuthException;
 use Kily\API\TrueAPI\Cli\Config;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
 use CLIFramework\Command;
 use CLIFramework\Component\Table\Table;
 use CPStore;
@@ -71,7 +72,8 @@ class BaseCommand extends Command
     protected function signedRequestInternal($method,$uri,$options) {
         $client = $this->getHttpClient();
         $options = array_merge($this->getSignedRequestOptions(),$options);
-        return $client->request($method,$uri,$options);
+        $request = new Request($method,$uri);
+        return $client->send($request,$options);
     }
 
     public function printTable($list,$columns=null) {
