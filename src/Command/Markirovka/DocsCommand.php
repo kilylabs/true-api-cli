@@ -18,6 +18,7 @@ class DocsCommand extends BaseCommand
 	{
         $this->command('list','\Kily\API\TrueAPI\Cli\Command\Markirovka\Docs\ListCommand');
         $this->command('view','\Kily\API\TrueAPI\Cli\Command\Markirovka\Docs\ViewCommand');
+        $this->command('create','\Kily\API\TrueAPI\Cli\Command\Markirovka\Docs\CreateCommand');
 	}
 
 	public function options($opts)

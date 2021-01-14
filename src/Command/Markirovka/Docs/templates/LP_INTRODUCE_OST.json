@@ -1,0 +1,17 @@
+# Please fill data to send
+# All strings after # character will be stripped
+{
+    "products_list": [ # Список сведений о товарах
+        {
+            "certificate_date": "2020-01-23", # Дата документа обязательной сертификации. Задаётся в формате yyyy-MM-dd.
+            "certificate_number": "string", # Номер документа обязательной сертификации.
+            "certificate_type": "string", # Тип документа, подтверждающего соответствие. Вид документа обязательной сертификации: CONFORMITY_CERTIFICATE – Сертификат соответствия; CONFORMITY_DECLARATION – Декларация о соответствии
+            "country": "string", # Страна производства. Указывается код страны в соответствии с ОКСМ. Например: 112 – Республика Беларусь
+            "declaration_date": "2020-01-23", # Дата регистрации ДТ. Задаётся в формате yyyy-MM-dd.  Диапазон даты начиная с 2000-01-01 по дату создания документа.
+            "declaration_number": "string", # Регистрационный номер ДТ
+            "ki": "string", # КИ/КИН. Обязательный, если не указан 'kitu'.
+            "kitu": "string" # КИТУ. Обязательный, если не указан 'kit'
+        }
+    ],
+    "trade_participant_inn": "string" # REQUIRED. ИНН участника, осуществившего эмиссию КИ
+}
