@@ -24,6 +24,8 @@ class ListCommand extends BaseCommand
         $opts->add('p|pretty','Pretty print');
         $opts->add('t|table','Print table');
         $opts->add('c|columns:','Comma-separated list of columns')->isa('string');
+
+        $opts->add('n|number:','Document number')->isa('string');
 	}
 
 	public function execute($action=null)
@@ -34,6 +36,7 @@ class ListCommand extends BaseCommand
             'query'=>[
                 'pg'=>$opts->pg ?: 'lp',
                 'limit'=>$opts->limit ?: '10',
+                'number'=>$opts->number ?: '',
             ],
         ]);
 
