@@ -23,7 +23,9 @@ class Config {
                 $config_file = $xdg->getConfigDirs()[0] ?? null;
                 $config_file .= '/'.self::APP_NAME.'/'.self::CONFIG_FILE;
                 if(!file_exists($config_file)) {
-                    mkdir(dirname($config_file),0775,true);
+                    if(!file_exists(dirname($config_file))) {
+                        mkdir(dirname($config_file),0775,true);
+                    }
                     touch($config_file);
                     file_put_contents($config_file,json_encode(new \stdClass));
                 }
