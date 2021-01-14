@@ -12,6 +12,7 @@ use CLIFramework\Component\Table\Table;
 use CPStore;
 use CPSigner;
 use CPSignedData;
+use CPAttribute;
 
 class BaseCommand extends Command
 {
@@ -125,7 +126,9 @@ class BaseCommand extends Command
         return true;
     }
 
-    protected function signData($content) {
+    protected function signData($content,$detached=false) {
+        $content = base64_encode($content);
+
         $opts = $this->getApplication()->getOptions();
         $store = new CPStore();
         $store->Open(CURRENT_USER_STORE,"my",STORE_OPEN_READ_ONLY);
@@ -145,11 +148,17 @@ class BaseCommand extends Command
                     $signer->set_KeyPin($opts->pin);
                 }
 
+                $attr = new CPAttribute;
+                $attr->set_Name(AUTHENTICATED_ATTRIBUTE_SIGNING_TIME);
+                $attr->set_Value(date("Ymdhis.u"));
+                $signer->get_AuthenticatedAttributes()->Add($attr);
+
                 $sd = new CPSignedData();
+                $sd->set_ContentEncoding(BASE64_TO_BINARY);
                 $sd->set_Content($content);
 
                 try {
-                    $sm = $sd->SignCades($signer, CADES_BES , false, ENCODE_BASE64);
+                    $sm = $sd->SignCades($signer, CADES_BES , $detached, ENCODE_BASE64);
                 } catch(\Exception $e) {
                     $last_e = $e;
                     continue;
