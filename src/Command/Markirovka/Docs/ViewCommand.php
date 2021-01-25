@@ -18,7 +18,7 @@ class ViewCommand extends BaseCommand
 
 	public function options($opts)
 	{
-        $opts->add('pg|product-group:','Product group')->isa('string');
+        $opts->add('g|product-group:','Product group')->isa('string');
         $opts->add('l|limit:','Limit number of documents listed')->isa('number');
         $opts->add('p|pretty','Pretty print');
         $opts->add('t|table','Print table');

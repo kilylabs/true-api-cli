@@ -19,7 +19,7 @@ class ListCommand extends BaseCommand
 
 	public function options($opts)
 	{
-        $opts->add('pg|product-group:','Product group')->isa('string');
+        $opts->add('g|product-group:','Product group')->isa('string');
         $opts->add('l|limit:','Limit number of documents listed')->isa('number');
         $opts->add('p|pretty','Pretty print');
         $opts->add('t|table','Print table');
@@ -34,7 +34,7 @@ class ListCommand extends BaseCommand
 
         $resp = $this->parent->signedRequest('GET','doc/listV2',[
             'query'=>[
-                'pg'=>$opts->pg ?: 'lp',
+                'pg'=>$opts->{'product-group'} ?: 'lp',
                 'limit'=>$opts->limit ?: '10',
                 'number'=>$opts->number ?: '',
             ],

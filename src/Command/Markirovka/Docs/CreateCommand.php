@@ -20,7 +20,7 @@ class CreateCommand extends BaseCommand
 
 	public function options($opts)
 	{
-        $opts->add('pg|product-group:','Product group')->isa('string');
+        $opts->add('g|product-group:','Product group')->isa('string');
 
         $opts->add('t|type:','Document type to send')->isa('string');
         $opts->add('f|file:','File to send')->isa('file');
@@ -85,7 +85,7 @@ class CreateCommand extends BaseCommand
 
         $resp = $this->parent->signedRequest('POST','lk/documents/create',[
             'query'=>[
-                'pg'=>$opts->pg ?: 'lp',
+                'pg'=>$opts->{'product-group'} ?: 'lp',
             ],
             'json'=>$json,
         ]);
