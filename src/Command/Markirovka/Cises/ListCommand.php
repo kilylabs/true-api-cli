@@ -19,7 +19,7 @@ class ListCommand extends BaseCommand
 
 	public function options($opts)
 	{
-        $opts->add('pg|product-group:','Product group')->isa('string');
+        $opts->add('g|product-group:','Product group')->isa('string');
         $opts->add('l|limit:','Limit number of codes listed')->isa('number');
         $opts->add('p|pretty','Pretty print');
         $opts->add('t|table','Print table');
@@ -40,21 +40,21 @@ class ListCommand extends BaseCommand
         if($opts->owned) {
             $resp = $this->parent->signedRequest('GET','https://ismp.crpt.ru/api/v3/facade/identifytools/listV2',[
                 'query'=>[
-                    'pg'=>$opts->pg ?: 'lp',
+                    'pg'=>$opts->{'product-group'} ?: 'lp',
                     'limit'=>$opts->limit ?: '10',
                 ],
             ]);
         } elseif($opts->received) {
             $resp = $this->parent->signedRequest('GET','https://ismp.crpt.ru/api/v3/facade/agent/received/list',[
                 'query'=>[
-                    'pg'=>$opts->pg ?: 'lp',
+                    'pg'=>$opts->{'product-group'} ?: 'lp',
                     'limit'=>$opts->limit ?: '10',
                 ],
             ]);
         } elseif($opts->sent) {
             $resp = $this->parent->signedRequest('GET','https://ismp.crpt.ru/api/v3/facade/agent/given/list',[
                 'query'=>[
-                    'pg'=>$opts->pg ?: 'lp',
+                    'pg'=>$opts->{'product-group'} ?: 'lp',
                     'limit'=>$opts->limit ?: '10',
                 ],
             ]);
