@@ -24,6 +24,7 @@ class MarkirovkaCommand extends BaseCommand
         $this->command('docs','\Kily\API\TrueAPI\Cli\Command\Markirovka\DocsCommand');
         $this->command('products','\Kily\API\TrueAPI\Cli\Command\Markirovka\ProductsCommand');
         $this->command('cises','\Kily\API\TrueAPI\Cli\Command\Markirovka\CisesCommand');
+        $this->command('receipts','\Kily\API\TrueAPI\Cli\Command\Markirovka\ReceiptsCommand');
 	}
 
 }
