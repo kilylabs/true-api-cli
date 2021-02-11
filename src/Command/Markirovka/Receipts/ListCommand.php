@@ -24,7 +24,11 @@ class ListCommand extends BaseCommand
         $opts->add('t|table','Print table');
         $opts->add('c|columns:','Comma-separated list of columns')->isa('string');
 
-        $opts->add('n|number:','Document number')->isa('string');
+        $opts->add('datef:','List documents from date')->isa('string');
+        $opts->add('datet:','List documents till date')->isa('string');
+        $opts->add('od','Document order direction')->isa('string');
+        $opts->add('pd','Document page direction')->isa('string');
+        $opts->add('inn','Sender inn')->isa('string');
 	}
 
 	public function execute($action=null)
@@ -32,10 +36,15 @@ class ListCommand extends BaseCommand
         $opts = $this->getOptions();
 
         $resp = $this->parent->signedRequest('GET','receipt/listV2',[
-            'query'=>[
+            'query'=>array_filter([
                 'pg'=>$opts->{'product-group'} ?: 'lp',
                 'limit'=>$opts->limit ?: '10',
-            ],
+                'dateFrom'=>$opts->datef ? date('Y-m-d\TH:i:s.v\Z',strtotime($opts->datef)) : null,
+                'dateTo'=>$opts->datet ? date('Y-m-d\TH:i:s.v\Z',strtotime($opts->datet)) : null,
+                'order'=>$opts->od ?: null,
+                'pageDir'=>$opts->pd ?: null,
+                'senderInn'=>$opts->inn ?: null,
+            ],function($el){return !is_null($el);}),
         ]);
 
         if($opts->table) {
