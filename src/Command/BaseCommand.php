@@ -33,7 +33,7 @@ class BaseCommand extends Command
         $opts = $this->getApplication()->getOptions();
         return [
             'debug'=>$opts->verbose ? true : false,
-            'timeout'=>10,
+            'timeout'=>60,
         ];
     }
 
