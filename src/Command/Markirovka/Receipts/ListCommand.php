@@ -23,6 +23,7 @@ class ListCommand extends BaseCommand
         $opts->add('p|pretty','Pretty print');
         $opts->add('t|table','Print table');
         $opts->add('c|columns:','Comma-separated list of columns')->isa('string');
+        $opts->add('n|number:','Receipt number')->isa('string');
 
         $opts->add('datef:','List documents from date')->isa('string');
         $opts->add('datet:','List documents till date')->isa('string');
@@ -38,7 +39,8 @@ class ListCommand extends BaseCommand
         $resp = $this->parent->signedRequest('GET','receipt/listV2',[
             'query'=>array_filter([
                 'pg'=>$opts->{'product-group'} ?: 'lp',
-                'limit'=>$opts->limit ?: '10',
+                'did'=>$opts->number ?? null,
+                'limit'=>$opts->number ? 1 : ($opts->limit ?: '10'),
                 'dateFrom'=>$opts->datef ? date('Y-m-d\TH:i:s.v\Z',strtotime($opts->datef)) : null,
                 'dateTo'=>$opts->datet ? date('Y-m-d\TH:i:s.v\Z',strtotime($opts->datet)) : null,
                 'order'=>$opts->od ?: null,
