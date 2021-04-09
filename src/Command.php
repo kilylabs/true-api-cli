@@ -38,6 +38,7 @@ class Command extends Application {
 
         $this->command( 'markirovka', '\Kily\API\TrueAPI\Cli\Command\MarkirovkaCommand');
         $this->command( 'suz', '\Kily\API\TrueAPI\Cli\Command\SuzCommand');
+        $this->command( 'kmt', '\Kily\API\TrueAPI\Cli\Command\KmtCommand');
     }
 
     public function runWithReturn($argv) {
