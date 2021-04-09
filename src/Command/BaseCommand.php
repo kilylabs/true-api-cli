@@ -72,7 +72,7 @@ class BaseCommand extends Command
 
     protected function signedRequestInternal($method,$uri,$options) {
         $client = $this->getHttpClient();
-        $options = array_merge($this->getSignedRequestOptions(),$options);
+        $options = array_replace_recursive($this->getSignedRequestOptions(),$options);
         $request = new Request($method,$uri);
         return $client->send($request,$options);
     }
