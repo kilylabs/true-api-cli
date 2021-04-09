@@ -20,12 +20,10 @@ class BaseCommand extends Command
     protected $_client;
     protected $_auth_token;
 
-    public function getHttpClient() {
-        if(!$this->_client) {
-            $this->_client = new HttpClient(
-                array_merge($this->getHttpClientDefaultOptions(),$this->getHttpClientOptions())
-            );
-        }
+    public function getHttpClient($options = []) {
+        $this->_client = new HttpClient(
+            array_replace_recursive($this->getHttpClientDefaultOptions(),$this->getHttpClientOptions(),$options)
+        );
         return $this->_client;
     }
 
@@ -107,7 +105,7 @@ class BaseCommand extends Command
     }
 
     protected function auth($method,$uri,$options) {
-        $client = $this->getHttpClient();
+        $client = $this->getHttpClient($options);
         $res = $client->request('GET', 'auth/key');
         $out = json_decode($res->getBody()->__toString());
         $content = $out->data;

@@ -42,4 +42,8 @@ class KmtCommand extends BaseCommand
         ];
     }
 
+    protected function auth($method,$uri,$options) {
+        $options['base_uri'] = 'https://markirovka.crpt.ru/api/v3/true-api/';
+        return parent::auth($method,$uri,$options);
+    }
 }
