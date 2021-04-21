@@ -32,7 +32,7 @@ class ViewCommand extends BaseCommand
         $resp = $this->parent->signedRequest('GET','documents/'.$id.'/info',[
             'query'=>[
                 //'pg'=>$opts->pg ?: 'lp',
-                //'limit'=>$opts->limit ?: '10',
+                'limit'=>$opts->limit ?: '50',
             ],
         ]);
 
