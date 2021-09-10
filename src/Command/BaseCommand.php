@@ -3,6 +3,7 @@
 namespace Kily\API\TrueAPI\Cli\Command;
 
 use Kily\API\TrueAPI\Cli\Exception\AuthException;
+use Kily\API\TrueAPI\Cli\Exception\Exception;
 use Kily\API\TrueAPI\Cli\Config;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\RequestException;
@@ -68,9 +69,20 @@ class BaseCommand extends Command
         }
     }
 
+    public function tokenRequest($method,$uri,$options = []) {
+        return $this->tokenRequestInternal($method,$uri,$options);
+    }
+
     protected function signedRequestInternal($method,$uri,$options) {
         $client = $this->getHttpClient();
         $options = array_replace_recursive($this->getSignedRequestOptions(),$options);
+        $request = new Request($method,$uri);
+        return $client->send($request,$options);
+    }
+
+    protected function tokenRequestInternal($method,$uri,$options) {
+        $client = $this->getHttpClient();
+        $options = $options;
         $request = new Request($method,$uri);
         return $client->send($request,$options);
     }
@@ -126,6 +138,10 @@ class BaseCommand extends Command
 
     protected function signData($content,$detached=false) {
         $content = base64_encode($content);
+
+        if(!class_exists('CPStore')) {
+            throw new Exception('It seems you don\'t have CryptoPRO installed. Please refer to guide: https://github.com/kilylabs/true-api-cli');
+        }
 
         $opts = $this->getApplication()->getOptions();
         $store = new CPStore();

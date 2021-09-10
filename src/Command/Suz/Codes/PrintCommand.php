@@ -73,7 +73,7 @@ class PrintCommand extends CodesCommand
             return;
         }
 
-        $resp = $this->signedRequest('GET',$opts->{'product-group'}.'/codes',[
+        $resp = $this->tokenRequest('GET',$opts->{'product-group'}.'/codes',[
             'headers'=>[
                 'clientToken'=>$clnt,
             ],

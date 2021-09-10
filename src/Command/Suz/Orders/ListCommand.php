@@ -51,7 +51,7 @@ class ListCommand extends OrdersCommand
             }
         }
 
-        $resp = $this->signedRequest('GET',$opts->{'product-group'}.'/orders',[
+        $resp = $this->tokenRequest('GET',$opts->{'product-group'}.'/orders',[
             'headers'=>[
                 'clientToken'=>$opts->clnt,
             ],

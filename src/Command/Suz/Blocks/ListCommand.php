@@ -56,7 +56,7 @@ class ListCommand extends BlocksCommand
             throw new Exception("You need to define --gtin option");
         }
 
-        $resp = $this->signedRequest('GET',$opts->{'product-group'}.'/codes/blocks',[
+        $resp = $this->tokenRequest('GET',$opts->{'product-group'}.'/codes/blocks',[
             'headers'=>[
                 'clientToken'=>$clnt,
             ],

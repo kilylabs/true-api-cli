@@ -80,7 +80,7 @@ class RetryCommand extends CodesCommand
         }
          */
 
-        $resp = $this->signedRequest('GET',$opts->{'product-group'}.'/codes/retry',[
+        $resp = $this->tokenRequest('GET',$opts->{'product-group'}.'/codes/retry',[
             'headers'=>[
                 'clientToken'=>$clnt,
             ],
