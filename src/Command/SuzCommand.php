@@ -23,6 +23,8 @@ class SuzCommand extends BaseCommand
 	public function init()
 	{
         $this->command('orders','\Kily\API\TrueAPI\Cli\Command\Suz\OrdersCommand');
+        $this->command('codes','\Kily\API\TrueAPI\Cli\Command\Suz\CodesCommand');
+        $this->command('blocks','\Kily\API\TrueAPI\Cli\Command\Suz\BlocksCommand');
 	}
 
 	public function options($opts)
