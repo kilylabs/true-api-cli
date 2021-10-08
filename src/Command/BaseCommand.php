@@ -191,12 +191,22 @@ class BaseCommand extends Command
 
     protected function setAuthToken($token) {
         $this->_auth_token = $token;
-        Config::set("markirovka_auth_token",$token);
+        $key = "markirovka_auth_token";
+        $opts = $this->getApplication()->getOptions();
+        if($opts->certid) {
+            $key .= "_".$opts->certid;
+        }
+        Config::set($key,$token);
     }
 
     protected function getAuthToken() {
         if(!$this->_auth_token) {
-            $this->_auth_token = Config::get("markirovka_auth_token");
+            $key = "markirovka_auth_token";
+            $opts = $this->getApplication()->getOptions();
+            if($opts->certid) {
+                $key .= "_".$opts->certid;
+            }
+            $this->_auth_token = Config::get($key);
         }
         return $this->_auth_token;
     }
