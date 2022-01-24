@@ -60,10 +60,11 @@ dpkg -i lsb-cprocsp-devel_5.0.11863-5_all.deb
 
 2) Качаем и устанавливаем КриптоПРО CADES 
 ```shell
-wget https://www.cryptopro.ru/sites/default/files/products/cades/current_release_2_0/cades_linux_amd64.tar.gz
-tar xvzf cades_linux_amd64.tar.gz
-cd cades_linux_amd64
-dpkg -i cprocsp-pki-phpcades-64_2.0.14071-1_amd64.deb cprocsp-pki-cades-64_2.0.14071-1_amd64.deb
+mkdir cades
+wget https://www.cryptopro.ru/sites/default/files/products/cades/current_release_2_0/cades-linux-amd64.tar.gz -O cades/cades-linux-amd64.tar.gz
+cd cades
+tar xvzf cades-linux-amd64.tar.gz
+dpkg -i cprocsp-pki-phpcades-64_2.0.14458-1_amd64.deb cprocsp-pki-cades-64_2.0.14458-1_amd64.deb
 ```
 
 3) Применяем специальный патч для поддержки PHP7+
@@ -76,14 +77,26 @@ patch <php7_support.patch
 4) В файле `/opt/cprocsp/src/phpcades/Makefile.unix` в переменную PHPDIR прописываем путь к хедерам нужной версии php
 Для PHP7.4 `PHPDIR=/usr/include/php/20190902`
 
+Там же, добавьте в конец строки, заканчивающийся на `-fPIC -DPIC` строку `-fpermissive`. В итоге должно получиться что-то вроде:
+```
+...
+-DSIZEOF_VOID_P=$(SIZEOF_VOID_P) -fPIC -DPIC -fpermissive
+...
+```
+
 5) Компилируем
 ```shell
 eval `/opt/cprocsp/src/doxygen/CSP/../setenv.sh --64`; make -f Makefile.unix
 ```
 
 Если всё прошло хорошо, в каталоге будет файл libphpcades.so
+6) Подключаем библиотеку
 В выводе php -i | grep extension_dir получаем путь к папке с расширениями и создаем там симплинк на собранную libphpcades.so
-В файле php.ini пишем extension=libphpcades.so
+```shell
+ln -s /opt/cprocsp/src/phpcades/libphpcades.so /usr/lib/php/20190902/
+```
+
+В файле php.ini добавляем в самый конец: `extension=libphpcades.so`
 
 Проверить корректность установки PHP-расширения можно с помощью команды:
 ```shell
